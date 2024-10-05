@@ -55,7 +55,7 @@ jobs:
 
           # Stop and remove existing containers (if any)
           echo "Stopping and removing the existing containers..."
-          docker-compose down || true
+          docker-compose down --remove-orphans --volumes || true
 
           # Clean up stopped containers, unused volumes, and old Docker images
           echo "Cleaning up stopped containers, volumes, and old Docker images..."
