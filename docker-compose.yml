@@ -1,4 +1,3 @@
-version: "2"
 services:
   app:
     image: ECR_REGISTRY/students-performance:GITHUB_SHA
