@@ -50,8 +50,18 @@ jobs:
         scp -o StrictHostKeyChecking=no -i private_key.pem ${{ github.workspace }}/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/tmp 
         ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
           
+          # Navigate to the temp directory
           cd /tmp
-          # docker stop backend-flask
-          # docker rm backend-flask
+
+          # Stop and remove existing containers (if any)
+          echo "Stopping and removing the existing containers..."
+          docker-compose down || true
+
+          # Remove unused images to free up space
+          echo "Cleaning up old Docker images..."
+          docker image prune -af
+
+          # Deploy the new version
+          echo "Starting up the new Docker containers..."
           docker-compose -p backend-flask up -d
         '
