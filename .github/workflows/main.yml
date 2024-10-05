@@ -57,8 +57,10 @@ jobs:
           echo "Stopping and removing the existing containers..."
           docker-compose down || true
 
-          # Remove unused images to free up space
-          echo "Cleaning up old Docker images..."
+          # Clean up stopped containers, unused volumes, and old Docker images
+          echo "Cleaning up stopped containers, volumes, and old Docker images..."
+          docker container prune -f
+          docker volume prune -f
           docker image prune -af
 
           # Deploy the new version
